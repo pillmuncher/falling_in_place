@@ -1,0 +1,451 @@
+#+TITLE: Falling Into Place — Session Summary
+#+AUTHOR: Mick Krippendorf
+#+DATE: 2026-03-05
+#+OPTIONS: toc:2
+
+[[file:index.org][Back to Index]]
+
+* Context
+
+This summary covers two chat sessions and integrates the project
+attachments: Hornet (2nd version), Pyraxial (2nd version), Causality
+(event-sourced ERP framework), =chrono.txt=, =plan.org=, =plan-a.org=,
+=plan-b.org=, and the previous =chat_summary.md=.
+
+The intellectual biography is documented in =chrono.txt=: Schopenhauer
+at 18 (1988), followed by Nietzsche, GEB, Prolog, Quine, analytic
+philosophy, and eventually Goodman, Wittgenstein, Daoism. Abstract
+algebra and Pyraxial arrived together in 2010; category theory in 2012;
+Hornet's first version in 2013; the Daodejing in 2014; the Zhuangzi in
+2019. The 2nd versions of both Pyraxial and Hornet, together with
+Causality, arrived in 2024-2025. This is not a scattered biography — it
+is a single trajectory whose internal logic became visible in retrospect.
+
+-----
+
+* The Book
+
+** Title (Working)
+
+/Falling Into Place: What Good Design Gives You for Free/
+
+** Central Claim
+
+Rightness in software design is coherence under extension.
+
+A design is right when future requirements do not force reinterpretation
+of its primitives. Extensibility that falls out is the symptom; coherence
+under extension is the criterion. Designed-in extensibility — plugins,
+hooks, escape hatches — is the tell that the design isn't right.
+
+Diagnostic inversion: /when extensibility just falls out, that is an
+indicator that the design is right./
+
+** Form and Tone
+
+Humorous, story-driven, koan-like where appropriate. Philosophical depth
+without academic heaviness. Insight revealed gradually — the reader
+internalizes before the vocabulary arrives.
+
+Inspirational models: GEB (Hofstadter), the Zhuangzi, Head First series.
+
+The structure of the book should enact its thesis:
+projection → failure → insight → stabilization.
+
+In another register: a Taiji training manual translated into software.
+意 (Yì) — intent — precedes implementation. 鬆 (Sōng) — release, not
+effort — the system yields to find the path of least resistance through
+the problem.
+
+** Proposed Structure (from plan.org)
+
+*** Part I — Irritations
+Concrete engineering problems without theory. Let the reader feel
+instability.
+
+- The PyQt QLineEdit Koan (written out in this session and prior)
+- The bankrupt company (concurrency fiasco)
+- The delta-shipping debacle
+- Order-dependent rectangle merging (Pyraxial origin story)
+
+*** Part II — Failed Solutions
+Typical responses: add guards, add patterns, add abstraction layers, add
+control, add more rules. Show how these increase fragility.
+
+*** Part III — Structural Shift
+Gradually uncover algebraic laws, closure properties, projection as the
+real test. Introduce Goodman and Luhmann, but lightly, embedded in
+narrative.
+
+*** Part IV — The Methodless Method
+No checklist. No dogma. A way of seeing systems:
+
+- Find the topology of the problem space.
+- Find the algebra and its laws.
+- Implement the basic operators accordingly.
+- Synthesize the system from those operators.
+- Let extensibility fall out.
+
+The method emerges as recognition, not prescription. It cannot be learned
+by reading the book. It can only be cultivated.
+
+** Format
+
+Blog series, one chapter per post, readable as a book. Feedback arrives
+chapter by chapter. The format enacts the thesis: coherence under
+extension, emerging structure, no premature commitment.
+
+** Language
+
+English. The voice is distinctly non-generic — precision, dry humor, and
+a central European philosophical sensibility that should not be sanded
+down.
+
+** Structural Option (Le Guin)
+
+Alternating chapters: one about Hornet, one about another project, idea,
+or war story. Modeled on Le Guin's zipped structure in /The Dispossessed/,
+where the two threads comment on each other and produce meaning neither
+would produce alone.
+
+Not committed yet. Worth keeping as an option.
+
+** Test Audience (from plan.org)
+
+- Linguistics/informatics background, Generalized Quantifier Theory
+  (Stefan Wilke, whose dissertation on anaphora resolution in Prolog
+  is attached as =99-121.pdf=)
+- Close-to-the-metal programmer, no logic programming or ERP background
+  (primary accessibility test — the Cook Ding test)
+- ERP project leader (grounds practical claims against real audit scenarios)
+- Informatics professor (academic legitimacy check)
+- Systems/networks researcher (distributed systems implications)
+
+-----
+
+* The Projects
+
+** Hornet
+
+A Prolog-like embedded DSL in Python ≥ 3.13. Horn clauses via expression
+trees, resolved by a triple-barrelled continuation monad carrying three
+continuations: =yes=, =no=, =prune=.
+
+The =prune= channel corresponds to Prolog's cut. In Prolog, cut is a
+procedural anomaly that breaks the declarative reading. In Hornet, it is
+a first-class operator in the /control/ algebra — not embarrassing, not
+extra-logical, but correctly situated. The system is non-distributive and
+non-commutative as a consequence, by design.
+
+Architecture:
+- =hornet.terms= — term algebra (syntax/algebra layer)
+- =hornet.combinators= — triple-barrelled continuation monad (control layer)
+- =hornet.clauses= — resolution engine and database (resolution layer)
+- Bootstrap predicates
+
+Key insight: =resolve()= is a functor from the term category into the
+combinator category. The functor boundary means the resolution engine is
+swappable without touching anything else. This was not a design decision
+— it was the only honest representation of what was actually happening.
+
+Affordances that fell out uninvited:
+- Sagas through defunctionalization (reified combinators are serializable,
+  enabling DDD-style sagas with compensation as alternative continuations)
+- Temporary clause additions via ChainMap for situational / context-dependent
+  reasoning, temporal rules, policy overlays, localized norms
+- Modal operators (temporal, epistemic, deontic) layering cleanly because
+  the ChainMap database was already the right shape
+- FFI escape hatch to SWI-Prolog for performance: the free term algebra
+  can generate actual Prolog code
+
+When extension requires rewriting primitives, design failed. Hornet did
+not require rewriting primitives.
+
+** Pyraxial
+
+An algebraic approach to axis-aligned rectangles.
+
+Origin: OCR project, reconstructing sentences from screen captures by
+computing bounding boxes for clusters of overlapping rectangles. A
+colleague wrote a triple-nested for-loop with order-dependent results
+(failing commutativity). The problem was stared at until its structure
+became visible as an algebra.
+
+First conjecture: Boolean algebra. Actual structure: complete
+semi-distributive non-modular lattice with identity elements EMPTY
+(for |, join/bounding-box) and PLANE (for &, meet/intersection).
+
+The algebraic laws are not just documented — the implementation enforces
+them. =inflate= and =deflate= reduce meet and join to four comparisons
+with no control flow, making commutativity structurally guaranteed rather
+than empirically checked.
+
+The colleague's bug can now be diagnosed precisely: it failed commutativity.
+Not "it had a bug" or "it was order-dependent" — but a specific algebraic
+property was missing, which tells you immediately what class of fixes is
+valid.
+
+The abstract algebra vocabulary arrived /after/ the structure was already
+seen. The name confirmed and sharpened what was already there.
+
+** Causality
+
+A minimal event-sourced ERP framework in Python, currently under
+development. Implements CQRS and event sourcing with a clean separation
+of commands, events, and projections.
+
+Entities are projected from event logs via fold:
+=entity := fold_left(transform, init(), events)=
+
+The framework is the dogfooding vehicle for Hornet as a business rule
+engine. The ERP domain is ideal for Hornet: complex conditional reasoning,
+exception handling, jurisdiction-specific variations. Events are facts
+added to the database; rules fire against them; the log is ground truth.
+
+This also connects to the plan.org open question: Hornet deliberately
+omits assert/retract. State change lives in the event sourcing layer.
+This is not an omission — it is a clean separation of concerns that
+maps naturally onto event sourcing's append-only log.
+
+The Causality project demonstrates the book's thesis at system scale:
+algebraic design of the event model, projection as the primary operation,
+immutability enforcing idempotency, and extensibility (new event types,
+new projections) falling out of the structure.
+
+-----
+
+* Key Philosophical Contributions
+
+** Rightness in Software Design (Goodmanian)
+
+Rightness in software design is coherence under extension. This is a
+Goodmanian claim: rightness is internal to the domain, not externally
+imposed. A design is right not because it satisfies an external standard
+but because it remains stable under the pressure of real use.
+
+Goodman's non-vicious circularity applies: good design encodes practices,
+and those practices stabilize and validate the design. Reflective
+equilibrium between implementation and use.
+
+** Abstraction vs. Generalization
+
+These are not the same thing and conflating them causes real damage.
+
+- /Generalization/ expands scope — more instances of the same structure.
+  It is horizontal.
+- /Abstraction/ changes the analytic level — a different vantage point
+  that reveals essential structure. It is vertical.
+
+Generality often follows from good abstraction as a consequence. Pursuing
+generality directly, before the right abstraction is found, produces
+premature generalization — many cases covered badly instead of a few
+cases understood well.
+
+This is what Perlis means: "In programming, everything we do is a special
+case of something more general — and often we know it too quickly." He
+is diagnosing premature generalization specifically.
+
+** The Cut as Sequential Control Algebra
+
+Prolog's cut is presented as a procedural anomaly that breaks the
+declarative reading. This framing is an artifact of Prolog's theoretical
+commitments, not a fact about the cut itself.
+
+In a sequential control algebra, the cut is not an anomaly — it is a
+natural operator with well-defined algebraic properties. Non-commutativity
+and non-distributivity are expected from a sequential algebra. Of course
+order matters.
+
+Prolog was trying to be two things at once — a logic system and a
+sequential computation system — and the cut is where those two things
+visibly conflict. Hornet doesn't try to be both. It knows what it is,
+so the cut fits.
+
+The cut should have been called "commit" in Prolog. "Cut" is borrowed
+prestige from Gentzen's sequent calculus (where cut-elimination is a
+central theorem about consistency) applied to an operator with entirely
+different semantics. A Goodmanian smuggling: the name imports an
+association from the wrong world.
+
+Connection to linear logic (Girard, 1987): linear logic treats facts as
+resources that get consumed rather than freely reused. This maps naturally
+onto stateful, sequential computation. Hornet's control algebra may be a
+fragment of linear logic — an open question worth investigating. If so,
+the cut's status there is very different from its status in classical
+resolution.
+
+Kowalski (1979): "Algorithm = Logic + Control." Prolog blurred this
+seam by making control a second-class citizen dressed in logical clothing.
+Hornet takes Kowalski seriously: logic and control are both first-class,
+each in its own algebra.
+
+** Rightness Smuggling (Goodmanian Pathology)
+
+Philosophical problems — and software design problems — often arise when
+a rightness criterion from one world is imported into another world
+without justification.
+
+Examples:
+- "Moral truth": the rightness of "being true" (epistemic world) smuggled
+  into moral discourse, producing moral realism
+- Prolog's "cut": logical-world rightness criteria applied to a
+  control-world operator, producing decades of confused theorizing
+- "Designed-in extensibility": the rightness criterion of "generality"
+  (mathematical world) or "flexibility" (product management world)
+  imported before the design has earned it, producing plugins and hooks
+  instead of affordances
+
+The Zhuangzi Rejection: refusing imported rightness criteria rather than
+arguing within them. Not a refutation — a declination. Huizi's
+epistemology is not wrong; it is simply not the relevant world (River
+Hao story).
+
+** Specification vs. Implementation
+
+The industry has conflated two distinct problems:
+
+1. The /specification problem/: what should the system do?
+2. The /implementation problem/: given a specification, produce code.
+
+All tooling addresses the second. Vibe coding and Ralph Loops amplify it.
+The specification problem is where most project failures originate and
+essentially no tooling addresses it directly.
+
+Algebraic design is a partial solution to the specification problem:
+finding the right algebra is identifying what code should exist and
+simultaneously what shouldn't, because illegal states become
+unrepresentable.
+
+** Lisa Simpson Loops
+
+A principled alternative to vibe coding (Ralph Wiggum Loops: generate
+code, check against tests, repeat until tests pass).
+
+Lisa Simpson Loops: generate code, check against /formal specifications/,
+feed failure back to the LLM, repeat until specs are satisfied. The
+algebraic properties are checkable artifacts that anchor the workflow.
+A commutativity failure has a name and a location — not "fix the bug"
+but "this implementation fails commutativity; revise it so that property
+holds."
+
+Requires HITL at two points: when generating the formal specs, and when
+deciding the loop is finished.
+
+-----
+
+* Intellectual Tools
+
+(See =tools.org= for the full file. Summary here.)
+
+** Perceptual
+- /Topological immersion/: loading a problem until its structure becomes
+  visible as topology, not symbol or geometry
+- /Sleeping on it/: after sufficient immersion, the unconscious ranges
+  over the loaded structure without deliberate stepping; documented by
+  Poincaré and Hadamard
+
+** Reframing
+- /What if it were different?/ (Wittgenstein): prevents the current
+  framing from hardening prematurely
+- /The Zhuangzi Rejection/: declining the frame rather than arguing
+  within it
+- /Restoring context-dependency/: "which world are we in?" before
+  applying any rightness criterion
+
+** Algebraic
+- /Trusting pre-verbal intuition/: the structure can be seen before it
+  can be named; the name arrives later and confirms what was already there
+- /Retroactive vocabulary/: learning the formal vocabulary for something
+  already done intuitively; load-bearing, makes certain bugs visible as
+  bugs
+
+** Diagnostic
+- /Wart vs. scar/: a wart is unexplained; a scar tells you exactly what
+  happened and why; the right abstraction locates anomalies in their
+  right world
+- /Detecting smuggling/: noticing when a rightness criterion has crossed
+  a world boundary uninvited
+
+** Design
+- /Abstraction vs. generalization/: vertical (analytic level) vs.
+  horizontal (scope); generality as consequence of abstraction, not goal
+
+-----
+
+* Algebraic Properties and Their Software Affordances
+
+| Property       | Affords                                              |
+|----------------+------------------------------------------------------|
+| Identity       | Null object, default value                           |
+| Associativity  | Grouping independence                                |
+| Commutativity  | Order independence                                   |
+| Distributivity | Splits and joins (concurrency, parallel execution)   |
+| Symmetry       | Reversibility — undo/redo                            |
+| Idempotency    | Safe repetition — retries become harmless            |
+| Closure        | No special cases — illegal states unrepresentable    |
+
+-----
+
+* Epigrams Reserved
+
+** Alan Perlis
+- "Every program has (at least) two purposes: the one for which it was
+  written, and another for which it wasn't." — affordance generation
+- "In programming, everything we do is a special case of something more
+  general — and often we know it too quickly." — premature generalization
+- "Simplicity does not precede complexity, but follows it."
+- "You can't communicate complexity, only an awareness of it." — possible
+  introduction epigram; almost a mission statement for the book's approach
+- "Computers don't introduce order anywhere as much as they expose
+  opportunities." — possible conclusion epigram; rhymes with the title
+
+** Alan Kay
+- "Point of View Is Worth 80 IQ Points."
+
+** Guy L. Steele Jr.
+- "The continuation that obeys only obvious stack semantics, O
+  grasshopper, is not the true continuation." — for a chapter on
+  continuations or sagas; "O grasshopper" reads as written for this book
+
+** Robert Kowalski
+- "Algorithm = Logic + Control." — for the chapter on Hornet and the cut
+
+-----
+
+* Open Questions (from plan.org)
+
+- How much Luhmann? Less familiar to the target audience than Wittgenstein
+  or Zhuangzi. Use sparingly or via Goodman's related concepts.
+- =assert=/=retract= deliberate omission in Hornet: maps onto event
+  sourcing layer. Worth a dedicated section.
+- =throw=/=catch= via =call_ec=: keeps everything inside the algebra,
+  critical for saga serializability. Worth developing.
+- Linear logic connection: is Hornet's control algebra a fragment of
+  Girard's linear logic? Potentially a publishable observation independent
+  of the book.
+- The cut as "commit": possibly worth a short technical paper for a logic
+  programming venue (e.g., /Theory and Practice of Logic Programming/).
+
+-----
+
+* War Stories Reserved
+
+- The delta-shipping debacle (processes are not architecture; single
+  point of failure dressed in a procedure; responsible person on vacation)
+- The concurrency fiasco (cargo cult process; known-broken shipped anyway;
+  company bankrupt six months later)
+- The angry phone call (three weeks, no delta imports, one line punchline)
+
+-----
+
+* Notes on 99-121.pdf
+
+This is the dissertation of Stefan Wilke (CIS/LMU), on anaphora
+resolution in a Prolog-based natural language parser using Generalized
+Quantifier Theory. Stefan is identified as a proofreader who will
+stress-test the logical foundations and modal extensions of Hornet,
+and the philosophical framing.
+
+The dissertation is relevant context for understanding the intellectual
+milieu — Prolog used for serious linguistic computation, constraint-based
+parsing, delayed goals, DCG rules — but is not a source for the book.
