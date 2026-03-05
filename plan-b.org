@@ -1,6 +1,7 @@
 #+TITLE: Notes for a Book on Software Design
 #+AUTHOR: (Working Draft)
-#+OPTIONS: toc:nil
+#+DATE: 2026
+#+OPTIONS: toc:2
 [[file:index.org][Back to Index]]
 
 * Core Intuition

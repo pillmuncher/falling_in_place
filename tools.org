@@ -1,5 +1,7 @@
 #+TITLE: Intellectual Tools
-#+AUTHOR: [your name]
+#+AUTHOR: Mick Krippendorf
+#+DATE: 2026
+#+OPTIONS: toc:2
 [[file:index.org][Back to Index]]
 
 * Perceptual

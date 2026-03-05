@@ -1,0 +1,6 @@
+#+TITLE: Algebraic Design
+#+AUTHOR: Mick Krippendorf
+#+DATE: 2026
+#+OPTIONS: toc:2
+[[file:index.org][Back to Index]]
+

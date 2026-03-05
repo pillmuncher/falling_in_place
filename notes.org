@@ -1,5 +1,9 @@
 #+TITLE: Notes
 #+AUTHOR: Mick Krippendorf
+#+DATE: 2026
+#+OPTIONS: toc:2
+[[file:index.org][Back to Index]]
+
 ** Abstraction vs. Generalization
 Generalization expands scope — more instances of the same structure.
 Abstraction changes the analytic level — a different vantage point

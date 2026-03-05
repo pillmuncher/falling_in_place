@@ -1,5 +1,6 @@
-#+TITLE: Falling Into Place: What Good Design Gives You for Free
-#+SUBTITLE: Notes for a Book on Software Design (Working Draft)
+#+TITLE: Falling Into Place
+#+SUBTITLE: What Good Design Gives You for Free
+#+DATE: 2026
 #+OPTIONS: toc:2
 [[file:index.org][Back to Index]]
 
