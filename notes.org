@@ -1,0 +1,13 @@
+#+TITLE: Notes
+#+AUTHOR: Mick Krippendorf
+** Abstraction vs. Generalization
+Generalization expands scope — more instances of the same structure.
+Abstraction changes the analytic level — a different vantage point
+on the same problem that reveals essential structure.
+
+Generalization is horizontal. Abstraction is vertical.
+
+Generality often follows from good abstraction as a consequence.
+Pursuing generality directly, before the right abstraction is found,
+produces premature generalization — many cases covered badly instead
+of a few cases understood well.
