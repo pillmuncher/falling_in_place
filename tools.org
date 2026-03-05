@@ -1,0 +1,60 @@
+#+TITLE: Intellectual Tools
+#+AUTHOR: [your name]
+[[file:index.org][Back to Index]]
+
+* Perceptual
+
+** Topological Immersion
+Loading a problem through intense focus until its structure becomes
+visible as topology rather than symbol or geometry. Requires
+uninterrupted time. Cannot be rushed.
+
+** Sleeping On It
+After sufficient immersion, the unconscious ranges over the loaded
+structure without the constraints of deliberate logical stepping.
+The topology becomes visible when you stop trying to see it.
+Poincaré and Hadamard document the same phenomenon.
+
+* Reframing
+
+** What If It Were Different?
+Wittgenstein's frame-destabilizer. Prevents the current framing
+from hardening into the only possible framing. Does not require
+knowing the answer — only keeping the question open.
+
+** The Zhuangzi Rejection
+Refusing imported rightness criteria rather than arguing within
+them. Not a refutation — a declination. Huizi's epistemology is
+not wrong, it is simply not the relevant world.
+
+** Restoring Context-Dependency
+Before applying a rightness criterion, ask: which world are we in?
+Common wisdom is often right in some worlds and wrong in others.
+The interesting question is always which world you are currently in.
+
+* Algebraic
+
+** Trusting Pre-Verbal Intuition
+The structure can be seen before it can be named. The name arrives
+later and confirms what was already there. The intuition does not
+have to be perfect — close enough for the vocabulary to take over.
+
+** Retroactive Vocabulary
+Learning the formal vocabulary for something you have already been
+doing intuitively. The vocabulary is load-bearing: it makes certain
+bugs visible as bugs and certain properties obligatory.
+
+* Diagnostic
+
+** Wart vs. Scar
+A wart is unexplained. A scar tells you exactly what happened and
+why. The right abstraction doesn't always simplify — sometimes it
+just clarifies. Locating an anomaly in its right world turns warts
+into scars.
+
+** Detecting Smuggling
+Noticing when a rightness criterion has crossed a world boundary
+uninvited. The tell: a concept that works perfectly in one domain
+is applied to another domain where its grounding hasn't been
+established. Examples: moral truth, Prolog's cut, designed-in
+extensibility.

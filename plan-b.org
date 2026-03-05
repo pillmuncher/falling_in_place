@@ -1,0 +1,220 @@
+#+TITLE: Notes for a Book on Software Design
+#+AUTHOR: (Working Draft)
+#+OPTIONS: toc:nil
+[[file:index.org][Back to Index]]
+
+* Core Intuition
+
+Software design rightness is not about ontology, fashion, or authority.
+It is about structural adequacy and stability under projection.
+
+Extensibility is not a feature to be added.
+It is a diagnostic: when it “falls out,” the structure mirrors the domain.
+
+The book should not present this as a thesis up front.
+It should allow the reader to discover it.
+
+---
+
+* Structural Spine of the Book
+
+** Central Claim (Emergent, Not Announced)
+
+Rightness in software design =
+Stability of transformation rules under disciplined extension.
+
+Or:
+
+A system is right when future requirements do not force reinterpretation
+of its primitives.
+
+---
+
+* Form and Tone
+
+- Humorous.
+- Story-driven.
+- Concrete.
+- Koan-like when appropriate.
+- Philosophical depth without academic heaviness.
+- Insight revealed gradually.
+
+Inspirational models:
+
+- /Gödel, Escher, Bach/ by Douglas Hofstadter
+- The /Zhuangzi/
+- Narrative-heavy technical books (e.g., “Head First” style)
+
+The structure of the book should enact its thesis:
+projection → failure → insight → stabilization.
+
+---
+
+* Proposed Structure
+
+** Part I — Irritations
+
+Concrete engineering problems without theory:
+
+- The PyQt QLineEdit validation koan.
+- The square vs. rectangle debate.
+- A brittle OOP hierarchy.
+- A feature request that breaks everything.
+- Order-dependent rectangle merging in OCR project (Pyraxial).
+
+Goal:
+Let the reader feel instability.
+
+---
+
+** Part II — Failed Solutions
+
+Typical responses:
+
+- Add guards.
+- Add patterns.
+- Add more abstraction layers.
+- Add more control.
+- Add more rules.
+
+Show how these increase fragility instead of reducing it.
+
+---
+
+** Part III — Structural Shift
+
+Gradually uncover:
+
+- Separation of structure from control flow.
+- Algebraic laws (commutativity, associativity, idempotence).
+- Closure properties.
+- Projection as the real test of architecture.
+- Extensibility as a consequence, not a goal.
+
+Introduce:
+
+- Circular stabilization (cf. Goodman).
+- Operational closure (cf. Luhmann).
+- Design ↔ use feedback loops.
+
+But keep philosophy light and embedded in narrative.
+
+---
+
+** Part IV — The Methodless Method
+
+No checklist.
+No dogma.
+
+Instead:
+
+A way of seeing systems:
+
+- Identify domain invariants.
+- Encode algebraic structure explicitly.
+- Preserve compositionality.
+- Allow temporary invalid states where appropriate.
+- Ensure order-independence where the domain demands it.
+- Let projection pressure test primitives.
+
+The “method” emerges as recognition, not prescription.
+
+---
+
+* Key Illustrative Examples
+
+** The QLineEdit Koan
+
+Problem:
+Prevent users from leaving invalid input.
+
+Insight:
+Absorb invalid states instead of forbidding movement.
+Design should tolerate the world, not control it.
+
+Structural lesson:
+Operational closure beats external enforcement.
+
+---
+
+** The Rectangle Merging (Pyraxial)
+
+Problem:
+Triple nested loop, order-dependent bounding boxes.
+
+Insight:
+The domain has algebraic structure (near-lattice).
+Order-dependence indicates missing commutativity.
+
+Structural lesson:
+When implementation violates algebraic invariants,
+architecture is wrong.
+
+---
+
+** Hornet Extensions
+
+Observation:
+Sagas, modal operators, contextual clause additions,
+and even Prolog code generation all “fell out.”
+
+Insight:
+Extensibility emerged because primitives were chosen well
+and closure properties were respected.
+
+Structural lesson:
+When extension requires rewriting primitives,
+design failed.
+
+---
+
+* Philosophical Undercurrents (Implicit, Not Heavy-Handed)
+
+- Circular justification of induction (Goodman):
+  Rules stabilize through practice.
+- Operational self-reference (Luhmann):
+  Systems reproduce themselves through their own operations.
+- Worlds as structured versions with internal rightness criteria.
+- No absolute meta-rightness.
+- Evaluation is internal and stabilized through projection.
+
+Software analogue:
+Design rightness is practice-stabilized structural adequacy.
+
+---
+
+* Recurring Motifs
+
+- Order-independence vs. hidden sequencing.
+- Absorbing vs. controlling the environment.
+- Algebra over algorithm.
+- Closure over patching.
+- Projection over prediction.
+- Stability over optimization.
+
+---
+
+* Central Diagnostic Principle
+
+When a system breaks under:
+
+- Permutation,
+- Extension,
+- Reordering,
+- Parallel application of rules,
+
+then its structure does not match the domain’s structure.
+
+---
+
+* End Goal
+
+The reader should finish the book not with:
+
+“A new methodology to follow.”
+
+But with:
+
+A sharpened perception for structural invariants,
+and the ability to recognize when extensibility will fall out —
+and when it won’t.

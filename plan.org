@@ -1,0 +1,500 @@
+#+TITLE: Falling Into Place: What Good Design Gives You for Free
+#+SUBTITLE: Notes for a Book on Software Design (Working Draft)
+#+OPTIONS: toc:2
+[[file:index.org][Back to Index]]
+
+* Core Intuition
+
+Software design rightness is not about ontology, fashion, or authority.
+It is about structural adequacy and stability under projection.
+
+Extensibility is not a feature to be added.
+It is a diagnostic: when it "falls out," the structure mirrors the domain.
+
+The book should not present this as a thesis up front.
+It should allow the reader to discover it.
+
+-----
+
+* Central Claim (Emergent, Not Announced)
+
+Rightness in software design =
+Stability of transformation rules under disciplined extension.
+
+Or:
+
+A system is right when future requirements do not force reinterpretation
+of its primitives.
+
+The "happiness of the system" — the metaphor introduced early and not
+resolved quickly. The anthropomorphization is deliberate: systems don't
+have feelings, so what is that talk of happiness? The category violation
+forces the reader out of habitual epistemic stance before they can
+raise Huizi-style objections. It is performative philosophy. Let the
+paradox sit. The discomfort is where the learning happens.
+
+-----
+
+* Form and Tone
+
+- Humorous.
+- Story-driven.
+- Concrete.
+- Koan-like when appropriate.
+- Philosophical depth without academic heaviness.
+- Insight revealed gradually — the reader internalizes before the
+  vocabulary arrives.
+
+Inspirational models:
+
+- /Gödel, Escher, Bach/ by Douglas Hofstadter
+- The /Zhuangzi/
+- Narrative-heavy technical books (e.g., "Head First" style)
+
+The structure of the book should enact its thesis:
+projection → failure → insight → stabilization.
+
+The book is, in another register, a Taiji training manual translated
+into software development. A small number of principles generate an
+entire practice through composition. The forms are not a collection
+of techniques but a vocabulary for internalizing the algebra until it
+operates below conscious attention. 意 (Yì) — intent — precedes
+implementation. 鬆 (Sōng) — release, not effort, not limpness — the
+system yields to find the path of least resistance through the problem.
+
+-----
+
+* Proposed Structure
+
+** Part I — Irritations
+
+Concrete engineering problems without theory.
+Let the reader feel instability.
+
+*** The PyQt QLineEdit Koan
+
+One morning, as Master Foo was walking through the garden, a student
+approached him. After bowing respectfully, the student said: "Master,
+I am very troubled." The master replied: "What troubles you,
+grasshopper?"
+
+The student said: "Well, Master, I have a QLineEdit field that must
+contain valid input before the user can proceed..."
+
+/[Full koan to be written out here.]/
+
+Insight:
+Absorb invalid states instead of forbidding movement.
+Design should tolerate the world, not control it.
+The Master doesn't trap the students. He changes the environment.
+
+Structural lesson:
+Operational closure beats external enforcement.
+
+Chapter 17 of the Daodejing as silent undercurrent:
+
+#+BEGIN_QUOTE
+Of the best ruler, the people only know he exists.
+...
+Of the work of one who is short with his words,
+the hundred families say: We have done it ourselves.
+#+END_QUOTE
+
+The best UI: the user thinks "I did it myself."
+The best infrastructure: the user thinks about the domain, not the machinery.
+The best bass player: the audience doesn't consciously hear him.
+
+*** The Square vs. Rectangle Debate
+
+/[Example to be developed.]/
+
+*** A Brittle OOP Hierarchy
+
+"Find the objects" is Aristotelian essentialism operationalized as
+methodology. The class hierarchy is the great chain of being in a
+text editor.
+
+Early computing pioneers brought Platonic and Aristotelian assumptions
+invisibly. Turing, von Neumann, the early AI researchers — working in
+an intellectual climate where objects had natural kinds, categories had
+essences, classification was the fundamental cognitive act. Even type
+theory drifted Platonic: types as ideal forms that terms inhabit.
+
+Meanwhile Quine was dissolving natural kinds in the 1960s, Goodman was
+demolishing essentialism in the 1970s, category theory was showing that
+objects are just the residue of morphisms. But this did not cross into
+mainstream programming methodology. The damage was already done.
+
+/[Concrete OOP hierarchy example to be developed.]/
+
+*** A Feature Request That Breaks Everything
+
+/[Example to be developed.]/
+
+*** Order-Dependent Rectangle Merging (Pyraxial)
+
+Problem:
+Triple nested loop, order-dependent bounding boxes.
+
+Insight:
+The domain has algebraic structure (near-lattice).
+Order-dependence indicates missing commutativity.
+
+Structural lesson:
+When implementation violates algebraic invariants,
+architecture is wrong.
+
+-----
+
+** Part II — Failed Solutions
+
+Typical responses to the irritations of Part I:
+
+- Add guards.
+- Add patterns.
+- Add more abstraction layers.
+- Add more control.
+- Add more rules.
+
+Show how these increase fragility instead of reducing it.
+Each solution is locally reasonable. The accumulation is the problem.
+The system becomes a palimpsest of patches, each one leaving a
+geological layer.
+
+-----
+
+** Part III — Structural Shift
+
+Gradually uncover the alternative. Do not announce it.
+Let each example reveal one more facet.
+
+*** Separation of Structure from Control Flow
+
+/[To be developed through Hornet as running example.]/
+
+*** The Algebraic Laws as Diagnostic Checklist
+
+Not a checklist to follow. A set of questions to ask.
+Each law you identify — or deliberately find absent — tells you
+something structural about the problem.
+
+**** Identity
+What does "nothing" mean in this domain?
+- Null object, default value, the empty event log, ~unit~, ~fail~
+- Absence of a natural identity is itself information — the operation
+  is partial and boundaries need explicit handling
+
+**** Closure
+No special cases — illegal states become simply unrepresentable.
+- 意 (Yì) as ontological commitment: the algebra embodies intent about
+  what the system should be able to mean
+- Not defensive programming against bad states but defining a world in
+  which those states don't exist
+- The limits of the language are the limits of the world (Wittgenstein)
+- Caveat: a cosmic ray can still flip a bit. This is a matter of intent,
+  not magic. But as a principle it is the right intent to have.
+
+**** Associativity
+Grouping independence.
+- What makes ~seq~ and ~amb~ work without parentheses mattering
+- Event log replay correctness within a transaction boundary
+- When associativity fails, hidden sequencing is doing invisible work
+
+**** Commutativity
+Order independence — most interesting where it is /absent/.
+- ~seq~ is not commutative and should not be
+- The asymmetry is load-bearing; noticing where commutativity fails
+  tells you where order matters and why
+- Order-dependent rectangle merging: missing commutativity as
+  architectural diagnostic
+
+**** Distributivity
+Splits and joins.
+- The MapReduce modal extension: the query distributes over database layers
+- ∀, ∃, ¬∃ falling out of a fold predicate without new logical primitives
+
+**** Symmetry
+Reversibility of operations — undo/redo.
+- Event sourcing: reversibility at the data layer
+- ~call_ec~: scoped reversibility at the computation layer
+- ChainMap push/pop: reversibility at the knowledge layer
+- A consistent reversibility story at every level — what auditors need
+  and what most systems conspicuously lack
+
+*** Projection as the Real Test of Architecture
+
+A system is right when future requirements do not force reinterpretation
+of its primitives.
+
+Extensibility is not a feature. It is a diagnostic.
+When it falls out, the structure mirrors the domain.
+When it doesn't, the structure mirrors a previous version of your
+understanding of the domain.
+
+*** Circular Stabilization
+
+Rules stabilize through practice (Goodman).
+Operational closure: systems reproduce themselves through their own
+operations (Luhmann).
+Worlds as structured versions with internal rightness criteria.
+No absolute meta-rightness.
+Design rightness is practice-stabilized structural adequacy.
+
+The software analogue: a design is right not because it satisfies an
+external standard but because it remains stable under the pressure of
+real use. The test is projection, not authority.
+
+-----
+
+** Part IV — The Methodless Method
+
+No checklist. No dogma.
+
+Instead: a way of seeing systems.
+
+- Identify domain invariants.
+- Find the topology of the problem space — its algebra and its laws.
+- Encode algebraic structure explicitly in basic operators.
+- Synthesize the system from those operators.
+- Preserve compositionality.
+- Allow temporary invalid states where appropriate.
+- Ensure order-independence where the domain demands it.
+- Let projection pressure-test primitives.
+
+This is a more principled version of Lisp's approach of creating DSLs
+to build systems — but the DSL is a consequence, not a goal. The goal
+is finding the mathematical structure that /is/ the problem. The
+implementation follows from that.
+
+It is also an inversion of the standard methodology:
+
+Standard: analyze bottom-up ("find the objects"), design top-down
+("build class hierarchies to place the objects in").
+
+This approach: find the global algebra and its laws, implement the
+basic operators, synthesize the system from those operators.
+
+The "method" emerges as recognition, not prescription.
+
+It cannot be learned by reading this book.
+It can only be cultivated.
+
+-----
+
+* Key Illustrative Examples
+
+** Hornet: The Running Example
+
+Hornet began as "I just wanted to understand Prolog."
+
+It became a continuation-passing logic DSL in Python with:
+- First-class prune semantics (the three-continuation algebra)
+- A clean functor boundary between term and combinator categories
+- Modal extensions for temporal-epistemic-deontic reasoning
+- Saga support through defunctionalized, serializable combinators
+- An FFI escape hatch to SWI-Prolog when performance demands it
+
+None of this was planned. The affordances fell out.
+
+The prune channel — ~yes~, ~no~, ~prune~ — was not grafted on.
+It is part of the algebra. Its presence reveals that Prolog is not
+primarily a logic system with operational add-ons. It is a sequential
+control algebra that sufficiently captures certain aspects of logical
+resolution.
+
+The functor between term and combinator categories means the resolution
+engine is swappable without touching anything else. That was not a
+design decision. It was the only honest representation of what was
+actually happening.
+
+The modal extensions — temporal, epistemic, deontic — layer cleanly
+because the ChainMap database was already the right shape. Situational
+reasoning by database extension, versioned regulatory frameworks, and
+DDD-style sagas with interrupted and resumed resolution all fell out
+of the same algebra.
+
+When extension requires rewriting primitives, design failed.
+Hornet did not require rewriting primitives.
+
+** The PyQt Koan
+
+/See Part I. Developed in full there./
+
+** The Rectangle Merging (Pyraxial)
+
+/See Part I. Developed in full there./
+
+-----
+
+* Philosophical Undercurrents
+
+Implicit, not heavy-handed. Present in the examples before they are named.
+Named only when the reader is ready to receive them as recognition.
+
+** Goodman
+- Rightness criteria are internal to symbol systems, not externally imposed
+- World-versions: the algebra doesn't describe the domain, it constitutes it
+- Exemplification: a symbol doesn't just refer to a property, it instantiates it
+- The Zhuangzi exemplifies what it promotes — its structure enacts its content
+- Circular stabilization: rightness is stabilized through practice, not
+  derived from foundations
+
+** Wittgenstein
+- Meaning as use
+- The limits of my language are the limits of my world
+- The algebra's closure defines the world's boundary —
+  what falls outside isn't handled, it isn't
+
+** Zhuangzi
+- Natural articulations: find the large gaps between bones and joints
+- Cook Ding's knife — skill that operates below conscious attention,
+  after cultivation dissolves effort
+- The Useless Oak — usefulness emerging from not optimizing for usefulness
+- The happiness of fish — recognizing rightness by attunement, not proof
+- Performative philosophy: the text enacts what it promotes
+- The Inner Chapters as palimpsest: each reading finds something new
+  because the reader brings what they currently have
+
+** Vervaeke
+- Affordances as relational and participatory — not in the code alone,
+  not in the programmer alone, but in the fit between a well-shaped
+  algebra and a cultivated mind that can recognize what it offers
+- Relevance realization: the affordances are only visible to the attuned
+- The 35 years of cultivation are what make the gaps visible
+
+** Luhmann
+- Operational closure: systems reproduce themselves through their own operations
+- The system is right when it can absorb the environment rather than
+  being controlled by it
+- Design should tolerate the world, not control it
+
+** The Anti-Essentialist Turn
+- Quine dissolving natural kinds and the analytic/synthetic distinction
+- Goodman demolishing essentialism
+- Davidson: meaning is irreducibly holistic and interpretive
+- Putnam: internal realism, followed wherever the argument led
+- Category theory: objects are the residue of morphisms, not bearers of essence
+- This did not cross into mainstream programming methodology in time
+- OOP emerged from an essentialist intellectual climate and carries those
+  assumptions invisibly
+
+-----
+
+* Running Metaphors
+
+Use consistently throughout without over-explaining.
+The reader should absorb them before they are named.
+
+- *Cook Ding's knife* finding the large gaps between bones and joints —
+  the skill that follows natural articulations without forcing
+- *The Useless Oak* — centuries of growth precisely because it was
+  useless; usefulness emerging from not optimizing for usefulness
+- *The happiness of fish* — recognizing rightness by attunement; you
+  cannot prove it to Huizi; you know it by watching how the system moves
+- *The cap merchant from Song in Yue* — mistaking local conventions for
+  universal needs; when someone doesn't see it, that is information about
+  their current categories, not a judgment on the idea
+- *Taiji training manual* — principles generating practice through
+  composition; 意 preceding implementation; 鬆 as release not effort
+- *Gottesdienst* — God's service to man, not man's service to God;
+  the system in service of the person, not the person in service of
+  the system's requirements; the best work goes unnoticed because it
+  is doing its job
+
+-----
+
+* Central Diagnostic Principle
+
+When a system breaks under:
+
+- Permutation,
+- Extension,
+- Reordering,
+- Parallel application of rules,
+
+then its structure does not match the domain's structure.
+
+This is not a methodology to apply.
+It is a perception to cultivate.
+
+-----
+
+* Closing Chapter
+
+Earned only after everything else.
+Do not put this here first.
+
+By this point the reader has already internalized the methodology
+through practice. The formal vocabulary arrives as recognition,
+not prescription. "Oh — that is what we have been doing all along."
+
+** The Complete Statement
+
+Find the topology of the problem space.
+Find the algebra and its laws.
+Implement the basic operators accordingly.
+Use them to synthesize the system.
+Let extensibility fall out.
+
+** When the Algebra Isn't Clean
+
+Not every problem space has a clean algebra.
+This is not a failure of the methodology. It is its maturation.
+
+Recognizing the topology of failures:
+- Where closure breaks
+- Where associativity fails
+- When you only have a semigroup, not a monoid
+- When you need a semigroupoid or a partial monoid
+- What it costs you when a law doesn't hold
+
+The difference between a design that fights the topology and one
+that respects it — that is the craft.
+
+Some oxen are harder than others.
+The skill is knowing the difference.
+
+** End Goal
+
+The reader should finish the book not with:
+
+"A new methodology to follow."
+
+But with:
+
+A sharpened perception for structural invariants,
+and the ability to recognize when extensibility will fall out —
+and when it won't.
+
+The large gaps between the bones and joints were always there.
+Cultivation is learning to see them.
+
+-----
+
+* Working Notes
+
+** Examples Still Needed
+- Square vs. rectangle (to be developed)
+- Brittle OOP hierarchy (to be developed)
+- Feature request that breaks everything (to be developed)
+- Full PyQt koan written out
+- Additional Hornet extension examples
+
+** Open Questions
+- How much Luhmann? He is less familiar to the target audience than
+  Wittgenstein or Zhuangzi. Use sparingly or via Goodman's related concepts.
+- assert/retract in Hornet: deliberate omission maps onto event sourcing
+  layer for state change. Worth a section in the Hornet example.
+- throw/catch via ~call_ec~: keeps everything inside the algebra,
+  critical for saga serializability. Worth developing.
+
+** Test Audience
+- Linguistics/informatics background, Generalized Quantifier Theory:
+  will stress-test logical foundations and modal extensions
+- Wittgenstein reading circle, PhD on anaphora resolution with Prolog:
+  will stress-test logic programming claims and philosophical framing
+- Close-to-the-metal programmer, no logic programming or ERP background:
+  primary accessibility test — Cook Ding test
+- ERP project leader: grounds practical claims against real audit scenarios
+- Informatics professor: academic legitimacy check
+- Systems/networks researcher: distributed systems implications

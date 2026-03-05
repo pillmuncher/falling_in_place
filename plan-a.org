@@ -1,0 +1,207 @@
+#+TITLE: Falling Into Place: What Good Design Gives You for Free
+#+AUTHOR:
+#+DATE: 2026
+#+OPTIONS: toc:2
+[[file:index.org][Back to Index]]
+
+* Structure and Tone
+
+- Blog posts organized as chapters, readable as a book
+- Humorous, concrete, accessible — GEB, Head First, Zhuangzi register
+- Never dry or academic, especially not early
+- Let the formal methodology reveal itself gradually through examples
+- The reader internalizes before the vocabulary arrives
+
+* Opening
+
+- The PyQt koan — Master Foo and the rice bowl
+- Establish the register immediately: serious philosophy wearing a silly hat
+- The "happiness of the system" metaphor introduced early as a productive paradox
+  - Anthropomorphization as performative philosophy — the category violation
+    forces the listener out of habitual epistemic stance
+  - Don't resolve it too quickly — the discomfort is where the learning happens
+  - The paradox is the point of entry, not an obstacle to it
+
+* The Methodology Revealed Through Examples
+
+Do not state the methodology. Let it emerge through concrete cases:
+
+- Hornet's origin: "I just wanted to understand Prolog"
+- The prune channel as part of the algebra, not an afterthought
+- The modal extensions falling out uninvited
+- The saga engine arriving unplanned
+- Affordances emerging from attunement, not design
+
+* The Algebraic Laws as Diagnostic Checklist
+
+Revealed gradually through examples, never prescribed upfront.
+
+** Identity
+What does "nothing" mean in this domain?
+- Null object, default value, the empty event log
+- Absence of a natural identity is itself information — the operation is
+  partial and boundaries need explicit handling
+
+** Closure
+No special cases — illegal states become unrepresentable.
+- 意 (Yì) as ontological commitment: the algebra embodies intent about
+  what the system should be able to mean
+- Not defensive programming against bad states but defining a world in
+  which those states don't exist
+- Caveat: doesn't help when a cosmic ray flips a bit — this is a matter
+  of intent, not magic
+
+** Associativity
+Grouping independence.
+- What makes ~seq~ and ~amb~ work without parentheses mattering
+- Event log replay order-independence within a transaction boundary
+
+** Commutativity
+Order independence — interesting where it's /absent/.
+- ~seq~ is not commutative and shouldn't be
+- The asymmetry is load-bearing; noticing where commutativity fails tells
+  you where order matters and why
+
+** Distributivity
+Splits and joins.
+- The MapReduce modal extension: query distributes over database layers
+- The quantifier over parallel ChainMap stacks — ∀, ∃, ¬∃ from the fold
+  predicate without adding new logical primitives
+
+** Symmetry
+Reversibility of operations — undo/redo.
+- Event sourcing gives this at the data layer
+- ~call_ec~ gives scoped reversibility at the computation layer
+- ChainMap push/pop gives reversibility at the knowledge layer
+- Consistent reversibility story at every level — what auditors need and
+  what most systems conspicuously lack
+
+* Philosophical Threads
+
+Woven throughout, never foregrounded. Present in the examples before
+they're named.
+
+** Goodman
+- Rightness criteria relative to symbol systems
+- World-versions: the algebra doesn't describe the domain, it constitutes it
+- Exemplification: the system doesn't just argue for its principles,
+  it instantiates them
+
+** Wittgenstein
+- Meaning as use
+- The limits of language as the limits of world
+- The algebra's closure defines the world's boundary
+
+** Zhuangzi
+- Natural articulations: find the large gaps between bones and joints
+- Cook Ding's knife — the skill that operates below conscious attention
+- The Useless Oak — usefulness emerging from not optimizing for usefulness
+- The happiness of fish — recognizing rightness by attunement, not proof
+- Performative philosophy: the text enacts what it promotes
+
+** Vervaeke
+- Affordances as relational and participatory — not in the code alone,
+  not in the programmer alone, but in the fit between them
+- Relevance realization: the affordances are only visible to the attuned
+
+** The Anti-Essentialist Turn
+- Quine dissolving natural kinds
+- Goodman demolishing essentialism
+- Category theory: objects are residue of morphisms, not bearers of essence
+- Davidson, Putnam: meaning is holistic and contextual
+
+* The Historical Argument
+
+- Early computing pioneers brought Platonic/Aristotelian assumptions invisibly
+- "Find the objects" is Aristotelian essentialism operationalized as methodology
+- The class hierarchy is the great chain of being in a text editor
+- Even type theory drifted Platonic: types as ideal forms that terms inhabit
+- Quine, Goodman, category theory arrived too late to correct the damage
+- Relational databases, object hierarchies, canonical data models: all
+  imposing a single ontology on domains that have none
+- Your approach: programming methodology after the anti-essentialist turn
+- Morphisms before objects. Algebra before taxonomy.
+
+* The Taiji Manual Parallel
+
+The book is a Taiji training manual translated into software development:
+
+- Small number of principles generating entire practice through composition
+- No special cases — just principles applied recursively to every situation
+- The forms aren't a collection of techniques but a vocabulary for
+  internalizing the algebra until it operates below conscious attention
+- 意 (Yì): intent precedes movement; the algebra precedes implementation
+- 鬆 (Sōng): release, not effort, not limpness — the system yields to find
+  the path of least resistance through the problem
+
+Pedagogical consequence: don't teach the principles first. Teach the form.
+Let the body find the large gaps. The principles become visible through
+practice, not before it.
+
+* Chapter 17 of the Daodejing as UX Design Manifesto
+
+#+BEGIN_QUOTE
+Of the best ruler, the people only know he exists.
+...
+Of the work of one who is short with his words,
+the hundred families say: We have done it ourselves.
+#+END_QUOTE
+
+- The trapping UI is the ruler they fear or abhor
+- The good UI: you accomplish your task and think "I did it myself"
+- The best infrastructure: the user thinks about the domain, not the machinery
+- The best bass player: the audience doesn't consciously hear him
+- The Christkönig acoustics: the voice fuller without the building announcing itself
+- Making your best work invisible requires subordinating programmer ego to
+  user experience — the hardest thing to teach
+
+* Running Metaphors
+
+Use consistently throughout without over-explaining:
+
+- *Cook Ding's knife* finding the large gaps between bones and joints
+- *The Useless Oak* — usefulness emerging from not optimizing for usefulness
+- *The happiness of fish* — recognizing rightness by attunement, not proof
+- *The cap merchant from Song in Yue* — mistaking local conventions for
+  universal needs; the reaction you sometimes get isn't a judgment on
+  your ideas, it's information about the listener's current categories
+- *Taiji training manual* translated into software development
+- *Gottesdienst*: the system in service of the person, not the person
+  in service of the system's requirements
+
+* What This Book Is That Nothing Else Is
+
+- The philosophical grounding without academic inaccessibility
+- The algebraic methodology without mathematical intimidation
+- The practical domain experience without mere how-to
+- The cultivation metaphor as pedagogy
+- Written for the programmer who senses there's something more principled
+  available but lacks the vocabulary
+- The common text for scattered people who already half-see this but
+  have no shared vocabulary to point at
+
+* Closing Chapter
+
+Earned only after everything else. Do not put this first.
+
+The complete formal statement of the methodology — algebraic laws as
+a full diagnostic framework. By this point the reader has already
+internalized it through practice. The formal vocabulary arrives as
+recognition, not prescription.
+
+** When the Algebra Isn't Clean
+
+- Not every problem space has a clean algebra
+- Recognizing the topology of failures:
+  - Where closure breaks
+  - Where associativity fails
+  - When you only have a semigroup, not a monoid
+  - When you need a semigroupoid or partial monoid
+- What it costs you when a law doesn't hold
+- The difference between a design that fights the topology and one
+  that respects it
+
+This is not a failure of the methodology. It is its maturation.
+
+The master doesn't always find clean gaps. Some oxen are harder than others.
+The skill is knowing the difference.

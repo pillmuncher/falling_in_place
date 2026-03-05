@@ -1,0 +1,36 @@
+#+TITLE: Epigrams
+#+AUTHOR: Mick Krippendorf
+[[file:index.org][Back to Index]]
+
+Alan Perlis:
+- Every program is a part of some other program and rarely fits.
+- Symmetry is a complexity-reducing concept (co-routines include subroutines); seek it everywhere.
+- If you have a procedure with ten parameters, you probably missed some.
+- Recursion is the root of computation since it trades description for time.
+- Everything should be built top-down, except the first time.
+- Every program has (at least) two purposes: the one for which it was written, and another for which it wasn't.
+- A good system can't have a weak command language.
+- In programming, everything we do is a special case of something more general -- and often we know it too quickly.
+- Simplicity does not precede complexity, but follows it.
+- Programmers are not to be measured by their ingenuity and their logic but by the completeness of their case analysis.
+- Some programming languages manage to absorb change, but withstand progress.
+- Beware of the Turing tar-pit in which everything is possible but nothing of interest is easy.
+- In English every word can be verbed. Would that it were so in our programming languages.
+- Computation has made the tree flower.
+-  Interfaces keep things tidy, but don't accelerate growth: Functions do.
+- Don't have good ideas if you aren't willing to be responsible for them.
+- Computers don't introduce order anywhere as much as they expose opportunities.
+- Dealing with failure is easy: Work hard to improve. Success is also easy to handle: You've solved the wrong problem. Work hard to improve.
+- One can't proceed from the informal to the formal by formal means.
+- You can't communicate complexity, only an awareness of it.
+
+Alan Kay:
+- Simple things should be simple. Complex things should be possible.
+- Point of View Is Worth 80 IQ Points.
+- Everybody loves change, except for the change part.
+
+Guy L. Steele, Jr.:
+- The continuation that obeys only obvious stack semantics, O grasshopper, is not the true continuation.
+
+Robert Kowalski:
+- Algorithm = Logic + Control

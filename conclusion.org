@@ -1,0 +1,3 @@
+#+TITLE: Conclusion
+#+AUTHOR: Mick Krippendorf
+[[file:index.org][Back to Index]]
